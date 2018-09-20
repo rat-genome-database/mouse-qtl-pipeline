@@ -1,0 +1,28 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="loader" class="edu.mcw.rgd.MouseQtlManager">
+		<property name="downloader" ref="downloader"/>
+        <property name="qtlDataLoader" ref="qtlDataLoader"/>
+        <property name="version" value="MouseQtl Pipeline v. 1.7.3 (Sep 20, 2018)" />
+	</bean>
+
+	<bean id="downloader" class="edu.mcw.rgd.FileDownloader">
+        <property name="ftpServer" value="http://www.informatics.jax.org"/>
+        <property name="ftpDirectory" value="/downloads/reports/"/>
+        <property name="fileAllele" value="MGI_QTLAllele.rpt"/>
+        <property name="fileMrkList" value="MRK_List2.rpt"/>
+        <property name="fileCoordinate" value="MGI_MRK_Coord.rpt"/>
+        <property name="dataDir" value="data/"/>
+	</bean>
+
+    <bean id="qtlDataLoader" class="edu.mcw.rgd.QtlDataLoader">
+        <property name="minQtlSize" value="10000"/><!-- for incoming qtls with size less than that, their sizes are adjusted by using avg qtl size-->
+        <property name="avgQtlSize" value="34000000"/><!-- current average mouse qtl size -->
+        <property name="evidenceCode" value="IEA" /> <!-- evidence code for created MP annotations -->
+        <property name="createdBy" value="71" /> <!-- pipeline user id for created MP annotations -->
+        <property name="aspect" value="N" /> <!-- aspect for created MP annotations -->
+        <property name="refRgdId" value="704405" /> <!-- ref rgd id for created MP annotations -->
+        <property name="dataSrc" value="MGI" /> <!-- data source for created MP annotations -->
+    </bean>
+        
+</beans>

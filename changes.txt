@@ -1,0 +1,36 @@
+v. 1.7.3, Sep 20, 2018
+  moved from subversion to github
+
+v. 1.7.2, Aug 27, 2018
+  updated to log4j
+
+v. 1.7.1, Jan 11, 2018
+  updated from JDK 1.7 to JDK 1.8; updated jars
+
+v. 1.7.0, Nov 21, 2016
+  migrated from ANT to GRADLE
+
+v. 1.6.5, Oct 5, 2016
+  changed MGI FTP site -- per RGDD-1287
+
+v. 1.6.4, May 13, 2016
+  new MP annots have their CREATED_DATE set to SYSDATE -- per RGDD-1194
+  added logging of inserted annotations
+
+v. 1.6.3, Feb 22, 2016
+  updated jars; fixed bug causing NullPointerException
+
+v. 1.6.2, Jan 11, 2016
+  updated jars; updated code because TRAITS table have been discontinued -- per RGDD-1126
+
+v. 1.6.1, Apr 2, 2014
+  updated jars; downloaded input files are stored in .gz format to save space
+
+v. 1.6., Sep 26, 2013
+  ensured that for genomic positions start_pos <= stop_pos  - per RGDD-340
+
+v. 1.5., Apr 08, 2013
+  added handling of qtl positions on assembly GRCm38; updated rgdcore
+
+v. 1.4., Dec 21, 2012
+  updated rgdcore so insertXdb is using RGD_ACC_XDB_SEQ sequence when inserting new rows
