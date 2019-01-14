@@ -82,7 +82,7 @@ public class MouseQtlDAO {
     /**
      * return all annotation details for given annotation; used to check if given annotation exists in database;
      * full_annot unique key values must be set in the annotation object
-     * @param annot Annotation object with following fields set: REF_RGD_ID, TERM_ACC, RGD_ID, EVIDENCE, WITH_INFO, QUALIFIER, XREF_SOIRCE, TERM and EXP_RGD_ID
+     * @param annot Annotation object with following fields set: REF_RGD_ID, TERM_ACC, RGD_ID, EVIDENCE, WITH_INFO, QUALIFIER, XREF_SOURCE
      * @return Annotation object with all others field set, including FULL_ANNOT_KEY, or null
      * @throws Exception
      */

@@ -1,3 +1,6 @@
+v. 1.7.4, Jan 14, 2019
+  revamped build.gradle; updated dependencies
+
 v. 1.7.3, Sep 20, 2018
   moved from subversion to github
 
