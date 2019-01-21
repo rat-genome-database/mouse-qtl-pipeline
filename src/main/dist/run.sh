@@ -16,4 +16,4 @@ java -Dspring.config=$APPDIR/../properties/default_db.xml \
     -Dlog4j.configuration=file://$APPDIR/properties/log4j.properties \
     -jar lib/$APPNAME.jar "$@" > cron.log 2>&1
 
-mailx -s "[$SERVER] MouseQtl pipeline complete" $ELIST < $APPDIR/logs/core.log
+mailx -s "[$SERVER] MouseQtl pipeline complete" $ELIST < $APPDIR/logs/detail.log

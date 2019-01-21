@@ -7,6 +7,7 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.core.io.FileSystemResource;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -27,19 +28,24 @@ public class MouseQtlManager {
         new XmlBeanDefinitionReader(bf).loadBeanDefinitions(new FileSystemResource("properties/AppConfigure.xml"));
         MouseQtlManager loader = (MouseQtlManager) (bf.getBean("loader"));
 
-        loader.run();
+        try {
+            loader.run();
+        } catch( Exception e ) {
+            Utils.printStackTrace(e, loader.log);
+            throw new Exception(e);
+        }
     }
 
     void run() throws Exception {
-        log.warn(getVersion());
-        log.warn("========START=======");
+        log.info(getVersion());
+        log.info("   "+qtlDataLoader.getDbInfo());
+
         long tmStart = System.currentTimeMillis();
+        SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        log.info("   started at "+sdt.format(new Date(tmStart)));
 
         // download input files and store them in local data folder
-        if( !downloader.run() ) {
-            log.fatal("========DOWNLOAD FAILURE=======");
-            return;
-        }
+        downloader.run();
 
         // load file names to be processed
         String fileNameAllele = downloader.getAlleleFileCopy();
@@ -51,24 +57,24 @@ public class MouseQtlManager {
         Map<String, QtlData> qtlDataMap = new HashMap<String, QtlData>();
         alleleParser.setQtlDataMap(qtlDataMap);
         int lineCount = alleleParser.parse(fileNameAllele);
-        log.warn("File "+fileNameAllele+": lines read "+lineCount);
+        log.info("File "+fileNameAllele+": lines read "+lineCount);
 
         // parse mrk list file
         FileMrkListParser mrkListParser = new FileMrkListParser();
         mrkListParser.setQtlDataMap(qtlDataMap);
         lineCount = mrkListParser.parse(fileNameMrkList);
-        log.warn("File "+fileNameMrkList+": lines read "+lineCount);
+        log.info("File "+fileNameMrkList+": lines read "+lineCount);
 
         // parse coord list file
         FileCoordParser coordParser = new FileCoordParser();
         coordParser.setQtlDataMap(qtlDataMap);
         lineCount = coordParser.parse(fileNameCoordinate );
-        log.warn("File "+fileNameCoordinate+": lines read "+lineCount);
+        log.info("File "+fileNameCoordinate+": lines read "+lineCount);
 
         // display map contents
         for( Map.Entry<String, QtlData> entry: qtlDataMap.entrySet() ) {
 
-            log.info("QC "+entry.getKey()+" : "+entry.getValue());
+            log.debug("QC "+entry.getKey()+" : "+entry.getValue());
 
             QtlData qtlData = entry.getValue();
             qtlDataLoader.load(qtlData);
@@ -76,30 +82,29 @@ public class MouseQtlManager {
 
         long tmEnd = System.currentTimeMillis();
 
-        log.warn("========SUMMARY=======");
-        log.warn("qtls processed: "+qtlDataMap.size());
-        log.warn("new qtls added: "+qtlDataLoader.getNewQtlCount());
-        log.warn("qtls updated: "+qtlDataLoader.getUpdatedQtlCount());
+        log.info("========SUMMARY=======");
+        log.info("qtls processed: "+qtlDataMap.size());
+        log.info("new qtls added: "+qtlDataLoader.getNewQtlCount());
+        log.info("qtls updated: "+qtlDataLoader.getUpdatedQtlCount());
 
-        log.warn("qtls with valid cM coordinates: "+qtlDataLoader.getcMMapCount());
-        log.warn("qtls with valid genomic coordinates: "+qtlDataLoader.getbPMapCount());
+        log.info("qtls with valid cM coordinates: "+qtlDataLoader.getcMMapCount());
+        log.info("qtls with valid genomic coordinates: "+qtlDataLoader.getbPMapCount());
         if( qtlDataLoader.getMapPosInserted()>0 )
-            log.warn("qtls with inserted map positions: "+qtlDataLoader.getMapPosInserted());
+            log.info("qtls with inserted map positions: "+qtlDataLoader.getMapPosInserted());
         if( qtlDataLoader.getMapPosDeleted()>0 )
-            log.warn("qtls with deleted coordinates: "+qtlDataLoader.getMapPosDeleted());
+            log.info("qtls with deleted coordinates: "+qtlDataLoader.getMapPosDeleted());
         if( qtlDataLoader.getMapPosUpdated()>0 )
-            log.warn("qtls with updated coordinates: "+qtlDataLoader.getMapPosUpdated());
-        log.warn("PubMed ids processed: "+qtlDataLoader.getPmIdsProcessed());
-        log.warn("new PubMed ids added: "+qtlDataLoader.getNewPmIdsAdded());
-        log.warn("MP ids processed: "+qtlDataLoader.getMpIdsProcessed());
-        log.warn("new MP ids added: "+qtlDataLoader.getNewMpIdsAdded());
-        log.warn("MP ids not found in RGD: "+qtlDataLoader.getMpIdsUnknown());
-        log.warn("pipeline run time: "+ Utils.formatElapsedTime(tmStart, tmEnd));
+            log.info("qtls with updated coordinates: "+qtlDataLoader.getMapPosUpdated());
+        log.info("PubMed ids processed: "+qtlDataLoader.getPmIdsProcessed());
+        log.info("new PubMed ids added: "+qtlDataLoader.getNewPmIdsAdded());
+        log.info("MP ids processed: "+qtlDataLoader.getMpIdsProcessed());
+        log.info("new MP ids added: "+qtlDataLoader.getNewMpIdsAdded());
+        log.info("MP ids not found in RGD: "+qtlDataLoader.getMpIdsUnknown());
+        log.info("pipeline run time: "+ Utils.formatElapsedTime(tmStart, tmEnd));
 
-        log.warn("========DONE=======");
+        log.info("========DONE=======\n");
 
         logSummaryIntoRgdSpringLogger((tmEnd-tmStart)/1000, qtlDataMap.size());
-
     }
 
     void logSummaryIntoRgdSpringLogger(long timeToExecute, int qtlsProcessed) throws Exception {

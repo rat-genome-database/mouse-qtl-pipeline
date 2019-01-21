@@ -24,17 +24,10 @@ public class MouseQtlDAO {
     AssociationDAO associationDAO = new AssociationDAO();
     QTLDAO qtlDAO = associationDAO.getQtlDAO();
 
-    Logger log = Logger.getLogger("core");
     Logger logAnnots = Logger.getLogger("insertedAnnots");
 
-    public MouseQtlDAO() {
-        // log the db username and url
-        try {
-            log.warn(rgdDAO.getConnectionInfo());
-        }
-        catch( Exception e ) {
-            e.printStackTrace();
-        }
+    public String getConnectionInfo() {
+        return rgdDAO.getConnectionInfo();
     }
 
     /**

@@ -1,12 +1,10 @@
 package edu.mcw.rgd;
 
+import edu.mcw.rgd.process.Utils;
 import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.Map;
-import java.util.zip.GZIPInputStream;
 
 /**
  * @author KPulakanti
@@ -27,15 +25,14 @@ public abstract class FileParser {
     public int parse(String fileName) throws Exception {
 
         Logger log = Logger.getLogger("core");
-        log.info("started parsing file "+fileName);
+        log.debug("started parsing file "+fileName);
 
         String line = null;
         int lineCount = 0;
 
-        InputStreamReader fr = null;
+        BufferedReader br = null;
         try{
-            fr = new InputStreamReader(new GZIPInputStream(new FileInputStream(fileName)));
-            BufferedReader br = new BufferedReader(fr);
+            br = Utils.openReader(fileName);
             while((line = br.readLine())!= null){
                 lineCount ++;
 
@@ -45,12 +42,12 @@ public abstract class FileParser {
             }
         }
         finally {
-            if( fr!=null ) {
+            if( br!=null ) {
                 // close the file if it is open
-                try { fr.close(); } catch(Exception e){}
+                try { br.close(); } catch(Exception e){}
             }
         }
-        log.info("finished parsing file "+fileName);
+        log.debug("finished parsing file "+fileName);
         return lineCount;
     }
 

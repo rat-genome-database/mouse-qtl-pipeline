@@ -29,17 +29,15 @@ public class FileDownloader {
 
     /**
      * download all files from MGD ftp site
-     * @return true if all files have been downloaded successfully; false otherwise
      */
-    public boolean run() throws Exception {
+    public void run() throws Exception {
 
         fileAlleleLocal = download(fileAllele);
         fileMrkListLocal = download(fileMrkList);
         fileCoordinateLocal = download(fileCoordinate);
-        return true;
     }
-    // Downloads all the three files in a local system from FTP server.
 
+    // Downloads all the three files in a local system from FTP server.
     public String download(String filename) throws Exception {
 
         edu.mcw.rgd.process.FileDownloader downloader = new edu.mcw.rgd.process.FileDownloader();
@@ -49,7 +47,7 @@ public class FileDownloader {
         downloader.setUseCompression(true);
 
         String localFile = downloader.download();
-        log.warn("Downloaded file "+filename);
+        log.info("Downloaded file "+filename);
 
         return localFile;
     }

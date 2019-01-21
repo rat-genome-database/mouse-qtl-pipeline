@@ -55,6 +55,10 @@ public class QtlDataLoader {
     // notes for current record
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
+    public String getDbInfo() {
+        return mouseQtlDAO.getConnectionInfo();
+    }
+
     // load this particular qtl data object into database
     public void load(QtlData data) throws Exception {
 
