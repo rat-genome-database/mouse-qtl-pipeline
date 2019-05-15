@@ -80,12 +80,14 @@ public class MouseQtlManager {
             qtlDataLoader.load(qtlData);
         }
 
-        long tmEnd = System.currentTimeMillis();
-
         log.info("========SUMMARY=======");
         log.info("qtls processed: "+qtlDataMap.size());
-        log.info("new qtls added: "+qtlDataLoader.getNewQtlCount());
-        log.info("qtls updated: "+qtlDataLoader.getUpdatedQtlCount());
+        if( qtlDataLoader.getNewQtlCount()>0 ) {
+            log.info("new qtls added: " + qtlDataLoader.getNewQtlCount());
+        }
+        if( qtlDataLoader.getUpdatedQtlCount()>0 ) {
+            log.info("qtls updated: " + qtlDataLoader.getUpdatedQtlCount());
+        }
 
         log.info("qtls with valid cM coordinates: "+qtlDataLoader.getcMMapCount());
         log.info("qtls with valid genomic coordinates: "+qtlDataLoader.getbPMapCount());
@@ -96,14 +98,20 @@ public class MouseQtlManager {
         if( qtlDataLoader.getMapPosUpdated()>0 )
             log.info("qtls with updated coordinates: "+qtlDataLoader.getMapPosUpdated());
         log.info("PubMed ids processed: "+qtlDataLoader.getPmIdsProcessed());
-        log.info("new PubMed ids added: "+qtlDataLoader.getNewPmIdsAdded());
+        if( qtlDataLoader.getNewPmIdsAdded()>0 ) {
+            log.info("new PubMed ids added: " + qtlDataLoader.getNewPmIdsAdded());
+        }
         log.info("MP ids processed: "+qtlDataLoader.getMpIdsProcessed());
-        log.info("new MP ids added: "+qtlDataLoader.getNewMpIdsAdded());
-        log.info("MP ids not found in RGD: "+qtlDataLoader.getMpIdsUnknown());
-        log.info("pipeline run time: "+ Utils.formatElapsedTime(tmStart, tmEnd));
+        if( qtlDataLoader.getNewMpIdsAdded()>0 ) {
+            log.info("new MP ids added: " + qtlDataLoader.getNewMpIdsAdded());
+        }
+        if( qtlDataLoader.getMpIdsUnknown()>0 ) {
+            log.info("MP ids not found in RGD: " + qtlDataLoader.getMpIdsUnknown());
+        }
+        log.info("pipeline run time: ");
 
-        log.info("========DONE=======\n");
-
+        long tmEnd = System.currentTimeMillis();
+        log.info("=====   DONE   elapsed "+ Utils.formatElapsedTime(tmStart, tmEnd));
         logSummaryIntoRgdSpringLogger((tmEnd-tmStart)/1000, qtlDataMap.size());
     }
 
