@@ -108,10 +108,9 @@ public class MouseQtlManager {
         if( qtlDataLoader.getMpIdsUnknown()>0 ) {
             log.info("MP ids not found in RGD: " + qtlDataLoader.getMpIdsUnknown());
         }
-        log.info("pipeline run time: ");
 
         long tmEnd = System.currentTimeMillis();
-        log.info("=====   DONE   elapsed "+ Utils.formatElapsedTime(tmStart, tmEnd));
+        log.info("=====   DONE   time elapsed "+ Utils.formatElapsedTime(tmStart, tmEnd));
         logSummaryIntoRgdSpringLogger((tmEnd-tmStart)/1000, qtlDataMap.size());
     }
 
