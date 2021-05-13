@@ -57,19 +57,19 @@ public class MouseQtlManager {
         Map<String, QtlData> qtlDataMap = new HashMap<String, QtlData>();
         alleleParser.setQtlDataMap(qtlDataMap);
         int lineCount = alleleParser.parse(fileNameAllele);
-        log.info("File "+fileNameAllele+": lines read "+lineCount);
+        log.info("  "+fileNameAllele+": lines read "+Utils.formatThousands(lineCount));
 
         // parse mrk list file
         FileMrkListParser mrkListParser = new FileMrkListParser();
         mrkListParser.setQtlDataMap(qtlDataMap);
         lineCount = mrkListParser.parse(fileNameMrkList);
-        log.info("File "+fileNameMrkList+": lines read "+lineCount);
+        log.info("  "+fileNameMrkList+": lines read "+Utils.formatThousands(lineCount));
 
         // parse coord list file
         FileCoordParser coordParser = new FileCoordParser();
         coordParser.setQtlDataMap(qtlDataMap);
         lineCount = coordParser.parse(fileNameCoordinate );
-        log.info("File "+fileNameCoordinate+": lines read "+lineCount);
+        log.info("  "+fileNameCoordinate+": lines read "+Utils.formatThousands(lineCount));
 
         // display map contents
         for( Map.Entry<String, QtlData> entry: qtlDataMap.entrySet() ) {
@@ -83,30 +83,30 @@ public class MouseQtlManager {
         log.info("========SUMMARY=======");
         log.info("qtls processed: "+qtlDataMap.size());
         if( qtlDataLoader.getNewQtlCount()>0 ) {
-            log.info("new qtls added: " + qtlDataLoader.getNewQtlCount());
+            log.info("new qtls added: " + Utils.formatThousands(qtlDataLoader.getNewQtlCount()));
         }
         if( qtlDataLoader.getUpdatedQtlCount()>0 ) {
-            log.info("qtls updated: " + qtlDataLoader.getUpdatedQtlCount());
+            log.info("qtls updated: " + Utils.formatThousands(qtlDataLoader.getUpdatedQtlCount()));
         }
 
-        log.info("qtls with valid cM coordinates: "+qtlDataLoader.getcMMapCount());
-        log.info("qtls with valid genomic coordinates: "+qtlDataLoader.getbPMapCount());
+        log.info("qtls with valid cM coordinates: "+Utils.formatThousands(qtlDataLoader.getcMMapCount()));
+        log.info("qtls with valid genomic coordinates: "+Utils.formatThousands(qtlDataLoader.getbPMapCount()));
         if( qtlDataLoader.getMapPosInserted()>0 )
-            log.info("qtls with inserted map positions: "+qtlDataLoader.getMapPosInserted());
+            log.info("qtls with inserted map positions: "+Utils.formatThousands(qtlDataLoader.getMapPosInserted()));
         if( qtlDataLoader.getMapPosDeleted()>0 )
-            log.info("qtls with deleted coordinates: "+qtlDataLoader.getMapPosDeleted());
+            log.info("qtls with deleted coordinates: "+Utils.formatThousands(qtlDataLoader.getMapPosDeleted()));
         if( qtlDataLoader.getMapPosUpdated()>0 )
-            log.info("qtls with updated coordinates: "+qtlDataLoader.getMapPosUpdated());
-        log.info("PubMed ids processed: "+qtlDataLoader.getPmIdsProcessed());
+            log.info("qtls with updated coordinates: "+Utils.formatThousands(qtlDataLoader.getMapPosUpdated()));
+        log.info("PubMed ids processed: "+Utils.formatThousands(qtlDataLoader.getPmIdsProcessed()));
         if( qtlDataLoader.getNewPmIdsAdded()>0 ) {
-            log.info("new PubMed ids added: " + qtlDataLoader.getNewPmIdsAdded());
+            log.info("new PubMed ids added: " + Utils.formatThousands(qtlDataLoader.getNewPmIdsAdded()));
         }
-        log.info("MP ids processed: "+qtlDataLoader.getMpIdsProcessed());
+        log.info("MP ids processed: "+Utils.formatThousands(qtlDataLoader.getMpIdsProcessed()));
         if( qtlDataLoader.getNewMpIdsAdded()>0 ) {
-            log.info("new MP ids added: " + qtlDataLoader.getNewMpIdsAdded());
+            log.info("new MP ids added: " + Utils.formatThousands(qtlDataLoader.getNewMpIdsAdded()));
         }
         if( qtlDataLoader.getMpIdsUnknown()>0 ) {
-            log.info("MP ids not found in RGD: " + qtlDataLoader.getMpIdsUnknown());
+            log.info("MP ids not found in RGD: " + Utils.formatThousands(qtlDataLoader.getMpIdsUnknown()));
         }
 
         long tmEnd = System.currentTimeMillis();
