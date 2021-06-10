@@ -3,7 +3,7 @@
 	<bean id="loader" class="edu.mcw.rgd.MouseQtlManager">
 		<property name="downloader" ref="downloader"/>
         <property name="qtlDataLoader" ref="qtlDataLoader"/>
-        <property name="version" value="MouseQtl Pipeline   -- build May 13, 2021" />
+        <property name="version" value="MouseQtl Pipeline   -- build Jun 10, 2021" />
 	</bean>
 
 	<bean id="downloader" class="edu.mcw.rgd.FileDownloader">
@@ -23,6 +23,12 @@
         <property name="aspect" value="N" /> <!-- aspect for created MP annotations -->
         <property name="refRgdId" value="704405" /> <!-- ref rgd id for created MP annotations -->
         <property name="dataSrc" value="MGI" /> <!-- data source for created MP annotations -->
+        <property name="genomicMaps">
+            <map>
+                <entry key="GRCm38" value="35"/>
+                <entry key="GRCm39" value="239"/>
+            </map>
+        </property>
     </bean>
         
 </beans>

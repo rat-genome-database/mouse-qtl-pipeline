@@ -68,6 +68,8 @@ public class MouseQtlManager {
         // parse coord list file
         FileCoordParser coordParser = new FileCoordParser();
         coordParser.setQtlDataMap(qtlDataMap);
+        coordParser.setKnownGenomeBuilds(qtlDataLoader.getGenomicMaps().keySet());
+
         lineCount = coordParser.parse(fileNameCoordinate );
         log.info("  "+fileNameCoordinate+": lines read "+Utils.formatThousands(lineCount));
 
@@ -81,7 +83,7 @@ public class MouseQtlManager {
         }
 
         log.info("========SUMMARY=======");
-        log.info("qtls processed: "+qtlDataMap.size());
+        log.info("qtls processed: "+Utils.formatThousands(qtlDataMap.size()));
         if( qtlDataLoader.getNewQtlCount()>0 ) {
             log.info("new qtls added: " + Utils.formatThousands(qtlDataLoader.getNewQtlCount()));
         }

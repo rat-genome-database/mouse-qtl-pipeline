@@ -6,23 +6,18 @@ import edu.mcw.rgd.datamodel.RgdId;
 import edu.mcw.rgd.datamodel.XdbId;
 import edu.mcw.rgd.datamodel.ontology.Annotation;
 import edu.mcw.rgd.datamodel.ontologyx.Term;
-import edu.mcw.rgd.process.Utils;
 import edu.mcw.rgd.process.sync.MapDataSyncer;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * Created by IntelliJ IDEA.
- * User: KPulakanti
- * Date: Jul 21, 2010
- * Time: 4:35:59 PM
+ * @author KPulakanti
+ * @since Jul 21, 2010
  */
 public class QtlDataLoader {
 
     public final int CM_MAP_KEY = 31; // map_key for cM map
-    //public final int ASSEMBLY37_MAP_KEY = 18; // map key for current reference assembly v 37
-    public final int ASSEMBLY38_MAP_KEY = 35; // map key for current reference assembly v 38
     public final int MAPS_DATA_POSITION_METHOD_ADJUSTED = 5; // Positioned by peak marker with size adjusted to avg qtl size for species
     public final int MAPS_DATA_POSITION_METHOD_IMPORTED = 6; // Position imported from MGD database as it is -- should not be modified during loading
 
@@ -31,6 +26,7 @@ public class QtlDataLoader {
     private String aspect;
     private int refRgdId;
     private String dataSrc;
+    private Map<String,Integer> genomicMaps;
 
     int minQtlSize;
     int avgQtlSize;
@@ -146,13 +142,13 @@ public class QtlDataLoader {
             syncer.addIncomingObject(md);
         }
 
-
-        // genomic assembly 38: validate start & stop positions
-        if( Utils.stringsAreEqual(data.getGenomeBuild(), "GRCm38") ) {
+        Integer genomicAssemblyMapKey = getGenomicMaps().get(data.getGenomeBuild());
+        if( genomicAssemblyMapKey!=null ) {
+            // genomic assembly: validate start & stop positions
             MapData md = new MapData();
             md.setChromosome(data.getChromosome());
             md.setRgdId(qtl.getRgdId());
-            md.setMapKey(ASSEMBLY38_MAP_KEY);
+            md.setMapKey(genomicAssemblyMapKey);
             md.setNotes(data.getNotes());
 
             if (data.getStart()==null || data.getStart().trim().length()==0 || data.getStart().startsWith("null") ||
@@ -176,7 +172,7 @@ public class QtlDataLoader {
 
                 adjustToAvgQtlSize(md);
 
-                // update counts for genomic map 38
+                // update counts for genomic map
                 this.bpMapCount++;
 
                 syncer.addIncomingObject(md);
@@ -374,16 +370,16 @@ public class QtlDataLoader {
             md.setStartPos(1);
         // qtl stop position cannot be greater than chromosome size
         md.setStopPos( md.getStopPos() + getAvgQtlSize()/2 );
-        int chrSize = getChromosomeSize(md.getChromosome());
+        int chrSize = getChromosomeSize(md.getMapKey(), md.getChromosome());
         if( md.getStopPos() > chrSize )
             md.setStopPos(chrSize);
         md.setMapsDataPositionMethodId(MAPS_DATA_POSITION_METHOD_ADJUSTED);
     }
     
     // get chromosome size on reference assembly
-    int getChromosomeSize(String chr) throws Exception {
+    int getChromosomeSize(int mapKey, String chr) throws Exception {
 
-        return mouseQtlDAO.getChromosomeSize(ASSEMBLY38_MAP_KEY, chr);
+        return mouseQtlDAO.getChromosomeSize(mapKey, chr);
     }
 
     public int getcMMapCount() {
@@ -536,6 +532,14 @@ public class QtlDataLoader {
 
     public void setMapPosDeleted(int mapPosDeleted) {
         this.mapPosDeleted = mapPosDeleted;
+    }
+
+    public Map<String, Integer> getGenomicMaps() {
+        return genomicMaps;
+    }
+
+    public void setGenomicMaps(Map<String, Integer> genomicMaps) {
+        this.genomicMaps = genomicMaps;
     }
 }
 
