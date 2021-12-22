@@ -4,7 +4,8 @@ import edu.mcw.rgd.dao.impl.*;
 import edu.mcw.rgd.datamodel.*;
 import edu.mcw.rgd.datamodel.ontology.Annotation;
 import edu.mcw.rgd.datamodel.ontologyx.Term;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class MouseQtlDAO {
     AssociationDAO associationDAO = new AssociationDAO();
     QTLDAO qtlDAO = associationDAO.getQtlDAO();
 
-    Logger logAnnots = Logger.getLogger("insertedAnnots");
+    Logger logAnnots = LogManager.getLogger("insertedAnnots");
 
     public String getConnectionInfo() {
         return rgdDAO.getConnectionInfo();

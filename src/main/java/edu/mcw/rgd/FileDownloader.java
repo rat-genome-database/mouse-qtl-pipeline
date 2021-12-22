@@ -1,6 +1,7 @@
 package edu.mcw.rgd;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author KPulakanti
@@ -20,7 +21,7 @@ public class FileDownloader {
 
     String dataDir = "data/"; // output data directory
 
-    Logger log = Logger.getLogger("core");
+    Logger log = LogManager.getLogger("status");
 
     static public void main(String[] args) throws Exception {
         FileDownloader fd = new FileDownloader();

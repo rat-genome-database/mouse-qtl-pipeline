@@ -1,6 +1,7 @@
 package edu.mcw.rgd;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public class FileAlleleParser extends FileParser {
 
-    Logger log = Logger.getLogger("core");
+    Logger log = LogManager.getLogger("status");
 
     /**
      * parse a line for the following information: old version of file
