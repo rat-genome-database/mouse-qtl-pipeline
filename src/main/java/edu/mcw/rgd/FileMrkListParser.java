@@ -1,6 +1,7 @@
 package edu.mcw.rgd;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author KPulakanti
@@ -13,7 +14,7 @@ import org.apache.log4j.Logger;
  */
 public class FileMrkListParser extends FileParser {
 
-    Logger log = Logger.getLogger("core");
+    Logger log = LogManager.getLogger("status");
 
     public void parseLine(String[] columns) throws Exception {
 

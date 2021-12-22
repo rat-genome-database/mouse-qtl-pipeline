@@ -1,7 +1,8 @@
 package edu.mcw.rgd;
 
 import edu.mcw.rgd.process.Utils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.util.Map;
@@ -24,7 +25,7 @@ public abstract class FileParser {
      */
     public int parse(String fileName) throws Exception {
 
-        Logger log = Logger.getLogger("core");
+        Logger log = LogManager.getLogger("status");
         log.debug("started parsing file "+fileName);
 
         String line = null;

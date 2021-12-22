@@ -3,7 +3,7 @@
 	<bean id="loader" class="edu.mcw.rgd.MouseQtlManager">
 		<property name="downloader" ref="downloader"/>
         <property name="qtlDataLoader" ref="qtlDataLoader"/>
-        <property name="version" value="MouseQtl Pipeline   -- build Jun 10, 2021" />
+        <property name="version" value="MouseQtl Pipeline   -- build Dec 22, 2021" />
 	</bean>
 
 	<bean id="downloader" class="edu.mcw.rgd.FileDownloader">

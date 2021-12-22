@@ -1,6 +1,7 @@
 package edu.mcw.rgd;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public class FileCoordParser extends FileParser {
 
     private Set<String> knownGenomeBuilds;
 
-    Logger log = Logger.getLogger("core");
+    Logger log = LogManager.getLogger("status");
 
     public void parseLine(String[] columns) throws Exception {
 
