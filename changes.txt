@@ -1,6 +1,9 @@
 Dec 22, 2021
   updated log4j to avoid zero day exploit
 
+Dec 22, 2021
+  updated log4j to avoid zero day exploit
+
 Jun 10, 2021
   added handling of GRCm39 assembly
 
