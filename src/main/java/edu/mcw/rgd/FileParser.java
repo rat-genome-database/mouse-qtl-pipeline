@@ -28,12 +28,10 @@ public abstract class FileParser {
         Logger log = LogManager.getLogger("status");
         log.debug("started parsing file "+fileName);
 
-        String line = null;
+        String line;
         int lineCount = 0;
 
-        BufferedReader br = null;
-        try{
-            br = Utils.openReader(fileName);
+        try( BufferedReader br = Utils.openReader(fileName) ) {
             while((line = br.readLine())!= null){
                 lineCount ++;
 
@@ -42,12 +40,7 @@ public abstract class FileParser {
                 parseLine(columns);
             }
         }
-        finally {
-            if( br!=null ) {
-                // close the file if it is open
-                try { br.close(); } catch(Exception e){}
-            }
-        }
+
         log.debug("finished parsing file "+fileName);
         return lineCount;
     }

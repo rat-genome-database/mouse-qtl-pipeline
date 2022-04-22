@@ -1,3 +1,6 @@
+Apr 22, 2022
+  simplified some code
+
 Mar 29, 2022
   tuned up logging
 
