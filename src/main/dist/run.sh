@@ -2,7 +2,7 @@
 # shell script to run mouse qtl pipeline
 . /etc/profile
 
-APPNAME=MouseQtl
+APPNAME="mouse-qtl-pipeline"
 APPDIR=/home/rgddata/pipelines/$APPNAME
 SERVER=`hostname -s | tr '[a-z]' '[A-Z]'`
 

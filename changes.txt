@@ -1,3 +1,6 @@
+Jul 26, 2022
+  renamed distro to 'mouse-qtl-pipeline'
+
 Apr 22, 2022
   simplified some code
 
