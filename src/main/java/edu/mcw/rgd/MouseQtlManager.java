@@ -1,6 +1,7 @@
 package edu.mcw.rgd;
 
 import edu.mcw.rgd.log.RGDSpringLogger;
+import edu.mcw.rgd.process.MemoryMonitor;
 import edu.mcw.rgd.process.Utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,6 +43,10 @@ public class MouseQtlManager {
         log.info("   "+qtlDataLoader.getDbInfo());
 
         long tmStart = System.currentTimeMillis();
+
+        MemoryMonitor memoryMonitor = new MemoryMonitor();
+        memoryMonitor.start();
+
         SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         log.info("   started at "+sdt.format(new Date(tmStart)));
 
@@ -111,6 +116,9 @@ public class MouseQtlManager {
         if( qtlDataLoader.getMpIdsUnknown()>0 ) {
             log.info("MP ids not found in RGD: " + Utils.formatThousands(qtlDataLoader.getMpIdsUnknown()));
         }
+
+        memoryMonitor.stop();
+        log.info(memoryMonitor.getSummary());
 
         long tmEnd = System.currentTimeMillis();
         log.info("=====   DONE   time elapsed "+ Utils.formatElapsedTime(tmStart, tmEnd));

@@ -3,11 +3,11 @@
 	<bean id="loader" class="edu.mcw.rgd.MouseQtlManager">
 		<property name="downloader" ref="downloader"/>
         <property name="qtlDataLoader" ref="qtlDataLoader"/>
-        <property name="version" value="mouse-qtl-pipeline   -- build Mar 02, 2026" />
+        <property name="version" value="mouse-qtl-pipeline   -- build Apr 07, 2026" />
 	</bean>
 
 	<bean id="downloader" class="edu.mcw.rgd.FileDownloader">
-        <property name="ftpServer" value="http://www.informatics.jax.org"/>
+        <property name="ftpServer" value="https://www.informatics.jax.org"/>
         <property name="ftpDirectory" value="/downloads/reports/"/>
         <property name="fileAllele" value="MGI_QTLAllele.rpt"/>
         <property name="fileMrkList" value="MRK_List2.rpt"/>
