@@ -114,9 +114,6 @@ public class QtlData {
    }
 
    public String getStop() {
-       if( this.start!=null && !this.start.equals(start) ) {
-           System.out.println("start pos mutating ");
-       }
        return stop;
    }
 
