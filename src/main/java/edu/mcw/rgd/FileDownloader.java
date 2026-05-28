@@ -41,7 +41,7 @@ public class FileDownloader {
     // Downloads all the three files in a local system from FTP server.
     public String download(String filename) throws Exception {
 
-        edu.mcw.rgd.process.FileDownloader downloader = new edu.mcw.rgd.process.FileDownloader();
+        edu.mcw.rgd.process.FileDownloader2 downloader = new edu.mcw.rgd.process.FileDownloader2();
         downloader.setExternalFile(ftpServer + ftpDirectory + filename);
         downloader.setLocalFile(dataDir+filename+".gz");
         downloader.setAppendDateStamp(true);

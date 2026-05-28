@@ -1,3 +1,6 @@
+May 27, 2026
+  switched to FileDownloader2; dropped unused commons-net and apache httpclient deps; updated dependencies
+
 Apr 07, 2026
   added MemoryMonitor; updated README; switched download URLs to https; updated dependencies
 
